@@ -28,12 +28,12 @@ guava
 
 -[ ] To start the application:
 ```
-./gradlew build
-java -jar ./hw01-gradle/build/libs/gradleHelloWorld-0.1.jar
+./gradlew clean build
+java -jar ./hw01-gradle/build/libs/gradleHelloWorld-0.1.jar one two two
 <p>
 ```
 -[ ] To unzip the jar:
 ```
-unzip -l hw01-gradle.jar
+unzip -l hw01-gradle-0.0.0-4.eb2d2ac0.hw01_gradle.dirty-SNAPSHOT.jar
 unzip -l gradleHelloWorld-0.1.jar
 ```
