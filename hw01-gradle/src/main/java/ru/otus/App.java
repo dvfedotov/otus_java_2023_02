@@ -3,10 +3,13 @@
  */
 package ru.otus;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Multiset;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+
+import static ru.otus.utils.HelloOtus.countOccurrences;
+import static ru.otus.utils.HelloOtus.countOccurrencesGuava;
 
 
 /**
@@ -18,15 +21,14 @@ import java.util.List;
  * unzip -l hw01-gradle.jar
  * unzip -l gradleHelloWorld-0.1.jar
  */
+
+@Slf4j
 public class App {
     public static void main(String... args) {
-        List<Integer> example = new ArrayList<>();
-        int min = 0;
-        int max = 100;
-        for (int i = min; i < max; i++) {
-            example.add(i);
-        }
+        Map<String, Integer> countMap = countOccurrences(args);
+        log.info("Word occurrence statistics [{}]", countMap);
 
-        System.out.println(Lists.reverse(example));
+        Multiset<String> countMapGuava = countOccurrencesGuava(args);
+        log.info("Word occurrence statistics with guava Multiset [{}]", countMapGuava);
     }
 }
