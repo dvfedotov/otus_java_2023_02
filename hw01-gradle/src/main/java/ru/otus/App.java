@@ -11,17 +11,6 @@ import java.util.Map;
 import static ru.otus.utils.HelloOtus.countOccurrences;
 import static ru.otus.utils.HelloOtus.countOccurrencesGuava;
 
-
-/**
- * To start the application:
- * ./gradlew build
- * java -jar ./hw01-gradle/build/libs/gradleHelloWorld-0.1.jar
- * <p>
- * To unzip the jar:
- * unzip -l hw01-gradle.jar
- * unzip -l gradleHelloWorld-0.1.jar
- */
-
 @Slf4j
 public class App {
     public static void main(String... args) {
