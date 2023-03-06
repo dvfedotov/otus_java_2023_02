@@ -61,6 +61,7 @@ allprojects {
             force("org.codehaus.jettison:jettison:1.1")
             force("net.java.dev.jna:jna:5.8.0")
             force("com.google.errorprone:error_prone_annotations:2.7.1")
+            force ("org.apache.logging.log4j:log4j:2.14.1")
         }
     }
 
