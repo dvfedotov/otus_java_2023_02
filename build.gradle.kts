@@ -35,6 +35,7 @@ allprojects {
     val protobufBom: String by project
 
     val guava: String by project;
+    val log4j: String by project;
 
 
     apply(plugin = "io.spring.dependency-management")
@@ -46,6 +47,7 @@ allprojects {
                 mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("com.google.guava:guava:$guava")
+            dependency("org.apache.logging.log4j:log4j:$log4j")
         }
     }
 
@@ -53,9 +55,6 @@ allprojects {
         resolutionStrategy {
             failOnVersionConflict()
 
-            force("javax.servlet:servlet-api:2.4")
-            force("commons-logging:commons-logging:1.1.1")
-            force ("org.apache.logging.log4j:log4j:2.14.1")
         }
     }
 
