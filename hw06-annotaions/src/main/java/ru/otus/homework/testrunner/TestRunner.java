@@ -47,36 +47,33 @@ public class TestRunner {
         }
     }
 
-    private static void invokeAfter(Object testClass) {
-        if (Arrays.stream(testClass.getClass().getDeclaredMethods())
-                .filter(m -> m.isAnnotationPresent(After.class)).toList().size() > 1){
-            throw new UnsupportedOperationException("Should be only one @After");
-        }
-        var optionalMethod = Arrays.stream(testClass.getClass().getDeclaredMethods())
-                .filter(m -> m.isAnnotationPresent(After.class)).findFirst();
-        try {
-            if (optionalMethod.isPresent()) {
-                optionalMethod.get().invoke(testClass);
-            }
-        } catch (IllegalAccessException | InvocationTargetException ex) {
-            log.info("fall After", ex);
-        }
-    }
-
-
     private static void invokeBefore(Object testClass) {
-        if (Arrays.stream(testClass.getClass().getDeclaredMethods())
-                .filter(m -> m.isAnnotationPresent(Before.class)).toList().size() > 1){
+        var methods = Arrays.stream(testClass.getClass().getDeclaredMethods())
+                .filter(m -> m.isAnnotationPresent(Before.class)).toList();
+        if(methods.size() > 1){
             throw new UnsupportedOperationException("Should be only one @Before");
         }
-            var optionalMethod = Arrays.stream(testClass.getClass().getDeclaredMethods())
-                    .filter(m -> m.isAnnotationPresent(Before.class)).findFirst();
         try {
-            if (optionalMethod.isPresent()) {
-                optionalMethod.get().invoke(testClass);
+            if (!methods.isEmpty()) {
+                methods.get(0) .invoke(testClass);
             }
         } catch (IllegalAccessException | InvocationTargetException ex) {
             log.info("fall Before", ex);
+        }
+    }
+
+    private static void invokeAfter(Object testClass) {
+        var methods = Arrays.stream(testClass.getClass().getDeclaredMethods())
+                .filter(m -> m.isAnnotationPresent(After.class)).toList();
+        if(methods.size() > 1){
+            throw new UnsupportedOperationException("Should be only one @After");
+        }
+        try {
+            if (!methods.isEmpty()) {
+                methods.get(0) .invoke(testClass);
+            }
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            log.info("fall After", ex);
         }
     }
 }
