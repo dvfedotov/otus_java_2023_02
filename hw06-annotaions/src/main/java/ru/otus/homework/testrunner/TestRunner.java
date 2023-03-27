@@ -48,6 +48,10 @@ public class TestRunner {
     }
 
     private static void invokeAfter(Object testClass) {
+        if (Arrays.stream(testClass.getClass().getDeclaredMethods())
+                .filter(m -> m.isAnnotationPresent(After.class)).toList().size() > 1){
+            throw new UnsupportedOperationException("Should be only one @After");
+        }
         var optionalMethod = Arrays.stream(testClass.getClass().getDeclaredMethods())
                 .filter(m -> m.isAnnotationPresent(After.class)).findFirst();
         try {
@@ -61,8 +65,12 @@ public class TestRunner {
 
 
     private static void invokeBefore(Object testClass) {
-        var optionalMethod = Arrays.stream(testClass.getClass().getDeclaredMethods())
-                .filter(m -> m.isAnnotationPresent(Before.class)).findFirst();
+        if (Arrays.stream(testClass.getClass().getDeclaredMethods())
+                .filter(m -> m.isAnnotationPresent(Before.class)).toList().size() > 1){
+            throw new UnsupportedOperationException("Should be only one @Before");
+        }
+            var optionalMethod = Arrays.stream(testClass.getClass().getDeclaredMethods())
+                    .filter(m -> m.isAnnotationPresent(Before.class)).findFirst();
         try {
             if (optionalMethod.isPresent()) {
                 optionalMethod.get().invoke(testClass);
