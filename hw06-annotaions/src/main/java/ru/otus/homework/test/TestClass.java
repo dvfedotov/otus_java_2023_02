@@ -1,4 +1,4 @@
-package ru.otus.homework;
+package ru.otus.homework.test;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.otus.homework.annotations.After;
