@@ -6,7 +6,7 @@ import ru.otus.homework.annotations.Before;
 import ru.otus.homework.annotations.Test;
 
 @Slf4j
-public class TestClass {
+public class TestClass3 {
 
     private int count;
 
@@ -14,7 +14,14 @@ public class TestClass {
     public void globalSetUp() {
         count = 1;
         log.info("*************  @Before ****************");
-        log.info("init @Before count [{}]", count);
+        log.info("init globalSetUp @Before count [{}]", count);
+    }
+
+    @Before
+    public void setUp() {
+        count = 2;
+        log.info("*************  @Before ****************");
+        log.info("init setUp @Before count [{}]", count);
     }
 
     @After
@@ -37,13 +44,6 @@ public class TestClass {
 
     @Test
     public void fallTestFirst(){
-        count++;
-        log.info("fallTest @Test count [{}]", count);
-        throw new RuntimeException("fallTest @Test");
-    }
-
-    @Test
-    public void fallTestSecond(){
         count++;
         log.info("fallTest @Test count [{}]", count);
         throw new RuntimeException("fallTest @Test");
