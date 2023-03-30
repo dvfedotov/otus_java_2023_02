@@ -34,17 +34,12 @@ public class TestRunner {
             log.error(ERROR_MESSAGE, clazz.getSimpleName(), ex);
             return;
         }
-        testMethods.forEach(m -> {
-            AnnotationsTestMethods annotationsTestMethods = AnnotationsTestMethods.builder()
-                    .beforeMethod(beforeMethod)
-                    .afterMethod(afterMethod)
-                    .testMethod(m).build();
-            invokeTest(clazz, result, annotationsTestMethods);
-        });
-        log.info("*************  Tests in {} complete ****************", clazz.getSimpleName());
-        log.info("Tests run: [{}], Pass: [{}], Failures: [{}]",
-                result.getCountPass() + result.getCountFall(), result.getCountPass(), result.getCountFall());
-        log.info("****************************************************");
+        testMethods.forEach(m -> invokeTest(clazz, result,
+                AnnotationsTestMethods.builder()
+                        .beforeMethod(beforeMethod)
+                        .afterMethod(afterMethod)
+                        .testMethod(m).build()));
+        logoutResult(clazz, result);
     }
 
     private static Method getMethod(Class<?> clazz, Class<? extends Annotation> annotation) {
@@ -80,5 +75,10 @@ public class TestRunner {
         }
     }
 
-
+    private static void logoutResult(Class<?> clazz, TestResult result) {
+        log.info("*************  Tests in {} complete ****************", clazz.getSimpleName());
+        log.info("Tests run: [{}], Pass: [{}], Failures: [{}]",
+                result.getCountPass() + result.getCountFall(), result.getCountPass(), result.getCountFall());
+        log.info("****************************************************");
+    }
 }
