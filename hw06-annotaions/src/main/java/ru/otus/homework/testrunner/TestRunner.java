@@ -20,38 +20,45 @@ public class TestRunner {
     public static void runTests(Class<?> clazz) {
         TestResult result = new TestResult();
         var testMethods = getMethods(clazz, Test.class);
-        var beforeMethods = getMethods(clazz, Before.class);
+        Method beforeMethod;
         try {
-            validateMethod(beforeMethods, "@Before");
+            beforeMethod = getMethod(clazz, Before.class);
         } catch (UnsupportedOperationException ex) {
-            log.error(ERROR_MESSAGE, clazz.getName(), ex);
+            log.error(ERROR_MESSAGE, clazz.getSimpleName(), ex);
             return;
         }
-        var afterMethods = getMethods(clazz, After.class);
+        Method afterMethod;
         try {
-            validateMethod(afterMethods, "@After");
+            afterMethod = getMethod(clazz, After.class);
         } catch (UnsupportedOperationException ex) {
-            log.error(ERROR_MESSAGE, clazz.getName(), ex);
+            log.error(ERROR_MESSAGE, clazz.getSimpleName(), ex);
             return;
         }
         testMethods.forEach(m -> {
             AnnotationsTestMethods annotationsTestMethods = AnnotationsTestMethods.builder()
-                    .beforeMethod(beforeMethods.isEmpty() ? null : beforeMethods.get(0))
-                    .afterMethod(afterMethods.isEmpty() ? null : afterMethods.get(0))
+                    .beforeMethod(beforeMethod)
+                    .afterMethod(afterMethod)
                     .testMethod(m).build();
             invokeTest(clazz, result, annotationsTestMethods);
         });
-        log.info("*************  Test runner complete ****************");
+        log.info("*************  Tests in {} complete ****************", clazz.getSimpleName());
         log.info("Tests run: [{}], Pass: [{}], Failures: [{}]",
                 result.getCountPass() + result.getCountFall(), result.getCountPass(), result.getCountFall());
         log.info("****************************************************");
     }
 
-
-    private static void validateMethod(List<Method> beforeMethods, String nameAnnotation) {
-        if (beforeMethods.size() > 1) {
-            throw new UnsupportedOperationException("Should be only one annotation " + nameAnnotation);
+    private static Method getMethod(Class<?> clazz, Class<? extends Annotation> annotation) {
+        var methods = getMethods(clazz, annotation);
+        if (methods.size() > 1) {
+            throw new UnsupportedOperationException("Should be only one annotation " + annotation.getSimpleName());
         }
+        return methods.isEmpty() ? null : methods.get(0);
+    }
+
+    private static List<Method> getMethods(Class<?> clazz, Class<? extends Annotation> annotation) {
+        return Arrays.stream(clazz.getDeclaredMethods())
+                .filter(m -> m.isAnnotationPresent(annotation))
+                .toList();
     }
 
     private static void invokeTest(Class<?> clazz, TestResult result, AnnotationsTestMethods annotationsTestMethods) {
@@ -71,12 +78,6 @@ public class TestRunner {
             log.info("{} fall test", method.getName(), ex);
             result.testFall();
         }
-    }
-
-    private static List<Method> getMethods(Class<?> clazz, Class<? extends Annotation> annotation) {
-        return Arrays.stream(clazz.getDeclaredMethods())
-                .filter(m -> m.isAnnotationPresent(annotation))
-                .toList();
     }
 
 
