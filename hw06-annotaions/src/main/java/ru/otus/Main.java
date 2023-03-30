@@ -4,6 +4,7 @@ import ru.otus.homework.test.TestClass;
 import ru.otus.homework.test.TestClass2;
 import ru.otus.homework.test.TestClass3;
 import ru.otus.homework.test.TestClass4;
+import ru.otus.homework.test.TestClass5;
 
 import static ru.otus.homework.testrunner.TestRunner.runTests;
 
@@ -14,5 +15,6 @@ public class Main {
         runTests(TestClass2.class);
         runTests(TestClass3.class);
         runTests(TestClass4.class);
+        runTests(TestClass5.class);
     }
 }
