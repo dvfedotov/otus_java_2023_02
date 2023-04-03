@@ -17,7 +17,7 @@ public class TestRunner {
 
     public static final String ERROR_MESSAGE = "Error when validate {}";
 
-    public static void runTests(Class<?> clazz) {
+    public void runTests(Class<?> clazz) {
         TestResult result = new TestResult();
         var testMethods = getMethods(clazz, Test.class);
         Method beforeMethod;
@@ -39,7 +39,7 @@ public class TestRunner {
         logoutResult(clazz, result);
     }
 
-    private static Method getMethod(Class<?> clazz, Class<? extends Annotation> annotation) {
+    private Method getMethod(Class<?> clazz, Class<? extends Annotation> annotation) {
         var methods = getMethods(clazz, annotation);
         if (methods.size() > 1) {
             throw new IllegalStateException("Should be only one annotation @" + annotation.getSimpleName());
@@ -47,13 +47,13 @@ public class TestRunner {
         return methods.isEmpty() ? null : methods.get(0);
     }
 
-    private static List<Method> getMethods(Class<?> clazz, Class<? extends Annotation> annotation) {
+    private List<Method> getMethods(Class<?> clazz, Class<? extends Annotation> annotation) {
         return Arrays.stream(clazz.getDeclaredMethods())
                 .filter(m -> m.isAnnotationPresent(annotation))
                 .toList();
     }
 
-    private static void invokeTest(Class<?> clazz, TestResult result, AnnotationsTestMethods annotationsTestMethods) {
+    private void invokeTest(Class<?> clazz, TestResult result, AnnotationsTestMethods annotationsTestMethods) {
         Method method = annotationsTestMethods.getTestMethod();
         try {
             Object testClass = clazz.getDeclaredConstructor().newInstance();
@@ -72,7 +72,7 @@ public class TestRunner {
         }
     }
 
-    private static void logoutResult(Class<?> clazz, TestResult result) {
+    private void logoutResult(Class<?> clazz, TestResult result) {
         log.info("*************  Tests in {} complete ****************", clazz.getSimpleName());
         log.info("Tests run: [{}], Pass: [{}], Failures: [{}]",
                 result.getCountPass() + result.getCountFall(), result.getCountPass(), result.getCountFall());
