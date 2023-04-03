@@ -35,17 +35,14 @@ public class TestRunner {
             return;
         }
         testMethods.forEach(m -> invokeTest(clazz, result,
-                AnnotationsTestMethods.builder()
-                        .beforeMethod(beforeMethod)
-                        .afterMethod(afterMethod)
-                        .testMethod(m).build()));
+                new AnnotationsTestMethods(beforeMethod, afterMethod, m)));
         logoutResult(clazz, result);
     }
 
     private static Method getMethod(Class<?> clazz, Class<? extends Annotation> annotation) {
         var methods = getMethods(clazz, annotation);
         if (methods.size() > 1) {
-            throw new IllegalStateException("Should be only one annotation " + annotation.getSimpleName());
+            throw new IllegalStateException("Should be only one annotation @" + annotation.getSimpleName());
         }
         return methods.isEmpty() ? null : methods.get(0);
     }

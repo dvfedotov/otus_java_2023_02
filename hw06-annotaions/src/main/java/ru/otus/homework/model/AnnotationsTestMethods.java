@@ -1,6 +1,6 @@
 package ru.otus.homework.model;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 
 @Getter
 @Setter
-@Builder
+@AllArgsConstructor
 public class AnnotationsTestMethods {
 
     private Method beforeMethod;
