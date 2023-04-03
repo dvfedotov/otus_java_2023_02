@@ -23,14 +23,14 @@ public class TestRunner {
         Method beforeMethod;
         try {
             beforeMethod = getMethod(clazz, Before.class);
-        } catch (UnsupportedOperationException ex) {
+        } catch (IllegalStateException ex) {
             log.error(ERROR_MESSAGE, clazz.getSimpleName(), ex);
             return;
         }
         Method afterMethod;
         try {
             afterMethod = getMethod(clazz, After.class);
-        } catch (UnsupportedOperationException ex) {
+        } catch (IllegalStateException ex) {
             log.error(ERROR_MESSAGE, clazz.getSimpleName(), ex);
             return;
         }
@@ -45,7 +45,7 @@ public class TestRunner {
     private static Method getMethod(Class<?> clazz, Class<? extends Annotation> annotation) {
         var methods = getMethods(clazz, annotation);
         if (methods.size() > 1) {
-            throw new UnsupportedOperationException("Should be only one annotation " + annotation.getSimpleName());
+            throw new IllegalStateException("Should be only one annotation " + annotation.getSimpleName());
         }
         return methods.isEmpty() ? null : methods.get(0);
     }
