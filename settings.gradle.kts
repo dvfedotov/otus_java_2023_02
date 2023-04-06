@@ -1,6 +1,7 @@
 rootProject.name = "otusJava"
 include ("hw01-gradle")
-
+include("hw04-generics")
+include("hw06-annotaions")
 
 pluginManagement {
     val jgitver: String by settings
@@ -17,4 +18,4 @@ pluginManagement {
         id("com.google.cloud.tools.jib") version jib
     }
 }
-include("hw04-generics")
+
