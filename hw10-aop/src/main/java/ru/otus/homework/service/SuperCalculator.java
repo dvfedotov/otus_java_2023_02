@@ -1,6 +1,6 @@
-package ru.otus.homework;
+package ru.otus.homework.service;
 
-public interface LogClass {
+public interface SuperCalculator {
 
     void calculation(int param1);
 
