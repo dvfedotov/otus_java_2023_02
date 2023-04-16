@@ -1,7 +1,6 @@
 package ru.otus.homework.aop;
 
 
-import ru.otus.homework.service.SuperCalculator;
 import ru.otus.homework.annotations.Log;
 import ru.otus.homework.service.impl.SuperCalculatorImpl;
 
@@ -15,26 +14,27 @@ public class Ioc {
     private Ioc() {
     }
 
-    public static SuperCalculator createProxyLogClass() {
-        InvocationHandler handler = new DemoInvocationHandler(new SuperCalculatorImpl());
-        return (SuperCalculator) Proxy.newProxyInstance(Ioc.class.getClassLoader(),
-                new Class<?>[]{SuperCalculator.class}, handler);
+    @SuppressWarnings("unchecked")
+    public static <T> T createProxyLogClass(T delegate) {
+        InvocationHandler handler = new DemoInvocationHandler(delegate);
+        return (T) Proxy.newProxyInstance(Ioc.class.getClassLoader(),
+                delegate.getClass().getInterfaces(), handler);
     }
 
     static class DemoInvocationHandler implements InvocationHandler {
-        private final SuperCalculator superCalculator;
+        private final Object delegate;
 
-        DemoInvocationHandler(SuperCalculator superCalculator) {
-            this.superCalculator = superCalculator;
+        DemoInvocationHandler(Object delegate) {
+            this.delegate = delegate;
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Method invokeMethod = SuperCalculatorImpl.class.getMethod(method.getName(), method.getParameterTypes());
+            Method invokeMethod = delegate.getClass().getMethod(method.getName(), method.getParameterTypes());
             if (invokeMethod.isAnnotationPresent(Log.class)) {
                 System.out.println("executed method:" + method.getName() + " , param: " + Arrays.toString(args));
             }
-            return method.invoke(superCalculator, args);
+            return method.invoke(delegate, args);
         }
     }
 }
