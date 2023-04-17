@@ -23,23 +23,26 @@ public class Ioc {
 
     static class DemoInvocationHandler implements InvocationHandler {
         private final Object delegate;
-        private final List<Method> invokeMethods;
+        private final List<Method> logMethods;
 
         DemoInvocationHandler(Object delegate) {
             this.delegate = delegate;
-            invokeMethods = Arrays.stream(delegate.getClass().getDeclaredMethods()).toList();
+            logMethods = Arrays.stream(delegate.getClass().getDeclaredMethods())
+                    .filter(m -> m.isAnnotationPresent(Log.class)).toList();
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Method invokeMethod = invokeMethods.stream()
-                    .filter(m -> m.getName().equals(method.getName())
-                            && Arrays.equals(m.getParameterTypes(), method.getParameterTypes()))
-                    .findFirst().orElseThrow();
-            if (invokeMethod.isAnnotationPresent(Log.class)) {
+            if (isLogPresent(method)) {
                 System.out.println("executed method:" + method.getName() + " , param: " + Arrays.toString(args));
             }
             return method.invoke(delegate, args);
+        }
+
+        private boolean isLogPresent(Method method) {
+            return logMethods.stream()
+                    .anyMatch(m -> m.getName().equals(method.getName())
+                            && Arrays.equals(m.getParameterTypes(), method.getParameterTypes()));
         }
     }
 }
