@@ -20,3 +20,4 @@ pluginManagement {
     }
 }
 include("hw12-solid")
+include("hw10-aop")
