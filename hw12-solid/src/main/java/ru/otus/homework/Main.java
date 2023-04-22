@@ -7,6 +7,7 @@ import ru.otus.homework.model.Currency;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class Main {
@@ -21,20 +22,24 @@ public class Main {
         atm.setCellList(cellList);
         log.info("log {}", atm);
         log.info("Balance [{}]", atm.getBalance());
-        atm.getMoney(1000);
+        Map<Currency, Integer> cashMap1 = atm.getMoney(1000);
+        log.info("cashMap [{}] ", cashMap1);
         atm.addCurrency(Currency.ONE_HUNDRED, 10);
         atm.addCurrency(Currency.FIVE_HUNDRED, 10);
         log.info("log {}", atm);
         log.info("Balance [{}]", atm.getBalance());
-        atm.getMoney(1310);
+        Map<Currency, Integer> cashMap2 = atm.getMoney(1300);
+        log.info("cashMap [{}] ", cashMap2);
         atm.addCurrency(Currency.ONE_THOUSAND, 100);
         log.info("log {}", atm);
         log.info("Balance [{}]", atm.getBalance());
-        atm.getMoney(13200);
+        Map<Currency, Integer> cashMap3 =atm.getMoney(13200);
+        log.info("cashMap [{}] ", cashMap3);
         atm.addCurrency(Currency.ONE_THOUSAND, 50);
         atm.addCurrency(Currency.FIVE_THOUSAND, 10);
         log.info("log {}", atm);
         log.info("Balance [{}]", atm.getBalance());
-        atm.getMoney(121600);
+        Map<Currency, Integer> cashMap4 = atm.getMoney(121600);
+        log.info("cashMap [{}] ", cashMap4);
     }
 }

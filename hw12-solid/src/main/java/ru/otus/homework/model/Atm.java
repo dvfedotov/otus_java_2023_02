@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import ru.otus.homework.exception.AtmException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,14 +46,14 @@ public class Atm {
                 .reduce(0, Integer::sum);
     }
 
-    public void getMoney(int sum) {
+    public Map<Currency, Integer> getMoney(int sum) {
         if (sum > getBalance()) {
             log.info("Could not get sum [{}] balance [{}]", sum, getBalance());
-            return;
+            throw new AtmException("Failed to receive the amount because there is not enough money in the ATM");
         }
         if (CollectionUtils.isEmpty(cellList)) {
-            log.info("Could not get sum [{}] because no money", sum);
-            return;
+            log.info("Could not get sum [{}] because no money in atm", sum);
+            throw new AtmException("Failed to receive the amount because there is no money in the ATM");
         }
         cellList.sort(Comparator.comparingInt(c -> c.getCurrency().getValue()));
         Collections.reverse(cellList);
@@ -60,11 +61,11 @@ public class Atm {
         final int[] tempSum = {sum};
         for (Cell cell : cellList) {
             int currency = cell.getCurrency().getValue();
-            int x = tempSum[0] / currency;
-            if (x > 0) {
-                if (cell.getCount() >= x) {
-                    cashMap.put(cell.getCurrency(), x);
-                    tempSum[0] = tempSum[0] - currency * x;
+            int count = tempSum[0] / currency;
+            if (count > 0) {
+                if (cell.getCount() >= count) {
+                    cashMap.put(cell.getCurrency(), count);
+                    tempSum[0] = tempSum[0] - currency * count;
                 } else {
                     cashMap.put(cell.getCurrency(), cell.getCount());
                     tempSum[0] = tempSum[0] - cell.getCount() * currency;
@@ -72,9 +73,10 @@ public class Atm {
             }
         }
 
+
         if (tempSum[0] > 0) {
             log.info("Could not get sum [{}] choose another sum", sum);
-            return;
+            throw new AtmException("Failed to receive the amount because there are no necessary banknotes in the ATM");
         }
         for (Map.Entry<Currency, Integer> entry : cashMap.entrySet()) {
             Optional<Cell> optionalCell = findCell(entry.getKey());
@@ -90,6 +92,7 @@ public class Atm {
 
 
         log.info("cashMap [{}], list[{}] ", cashMap, cellList);
+        return cashMap;
     }
 
     private Optional<Cell> findCell(Currency currency) {
