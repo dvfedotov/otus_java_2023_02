@@ -64,17 +64,18 @@ public class Atm {
             if (x > 0) {
                 if (cell.getCount() >= x) {
                     cashMap.put(cell.getCurrency(), x);
-                    tempSum[0] -= currency * x;
+                    tempSum[0] = tempSum[0] - currency * x;
                 } else {
                     cashMap.put(cell.getCurrency(), cell.getCount());
-                    tempSum[0] -= cell.getCount() * currency;
+                    tempSum[0] = tempSum[0] - cell.getCount() * currency;
                 }
             }
         }
 
         if (tempSum[0] > 0) {
             log.info("Could not get sum [{}] choose another sum", sum);
-        } else {
+            return;
+        }
             for (Map.Entry<Currency, Integer> entry : cashMap.entrySet()) {
                 Optional<Cell> optionalCell = cellList.stream().filter(c -> c.getCurrency().equals(entry.getKey())).findFirst();
                 if (optionalCell.isPresent()) {
@@ -86,6 +87,5 @@ public class Atm {
                 }
             }
             log.info("cashMap [{}], list[{}] ", cashMap, cellList);
-        }
     }
 }
