@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -55,25 +55,37 @@ public class Atm {
             return;
         }
         cellList.sort(Comparator.comparingInt(c -> c.getCurrency().getValue()));
-        log.info("List [{}] ", cellList);
         Collections.reverse(cellList);
-        log.info("List [{}] ", cellList);
-        Map<Cell, Integer> map = new HashMap<>();
+        Map<Currency, Integer> cashMap = new EnumMap<>(Currency.class);
         final int[] tempSum = {sum};
         cellList.forEach(c -> {
                     int currency = c.getCurrency().getValue();
                     int x = tempSum[0] / currency;
                     if (x > 0) {
                         if (c.getCount() >= x) {
-                            map.put(c, x);
+                            cashMap.put(c.getCurrency(), x);
                             tempSum[0] -= currency * x;
                         } else {
-                            map.put(c, c.getCount());
+                            cashMap.put(c.getCurrency(), c.getCount());
                             tempSum[0] -= c.getCount() * currency;
                         }
                     }
                 }
         );
-        log.info("Map [{}] ", map);
+        if (tempSum[0] > 0) {
+            log.info("Could not get sum [{}] choose another sum", sum);
+        } else {
+            for (Map.Entry<Currency, Integer> entry : cashMap.entrySet()) {
+                Optional<Cell> optionalCell = cellList.stream().filter(c -> c.getCurrency().equals(entry.getKey())).findFirst();
+                if (optionalCell.isPresent()) {
+                    Cell cell = optionalCell.get();
+                    cell.setCount(cell.getCount() - entry.getValue());
+                    if (cell.getCount() == 0) {
+                        cellList.remove(cell);
+                    }
+                }
+            }
+            log.info("cashMap [{}], list[{}] ", cashMap, cellList);
+        }
     }
 }

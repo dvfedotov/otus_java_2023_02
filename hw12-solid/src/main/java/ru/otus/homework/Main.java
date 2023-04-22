@@ -23,17 +23,18 @@ public class Main {
         log.info("Balance [{}]", atm.getBalance());
         atm.getMoney(1000);
         atm.addCurrency(Currency.ONE_HUNDRED, 10);
+        atm.addCurrency(Currency.FIVE_HUNDRED, 10);
         log.info("log {}", atm);
         log.info("Balance [{}]", atm.getBalance());
-        atm.getMoney(10000);
+        atm.getMoney(1310);
         atm.addCurrency(Currency.ONE_THOUSAND, 100);
         log.info("log {}", atm);
         log.info("Balance [{}]", atm.getBalance());
-        atm.getMoney(11000);
+        atm.getMoney(13200);
         atm.addCurrency(Currency.ONE_THOUSAND, 50);
         atm.addCurrency(Currency.FIVE_THOUSAND, 10);
         log.info("log {}", atm);
         log.info("Balance [{}]", atm.getBalance());
-        atm.getMoney(121000);
+        atm.getMoney(121600);
     }
 }
