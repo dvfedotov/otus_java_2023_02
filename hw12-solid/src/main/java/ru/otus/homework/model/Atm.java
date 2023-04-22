@@ -76,16 +76,19 @@ public class Atm {
             log.info("Could not get sum [{}] choose another sum", sum);
             return;
         }
-            for (Map.Entry<Currency, Integer> entry : cashMap.entrySet()) {
-                Optional<Cell> optionalCell = cellList.stream().filter(c -> c.getCurrency().equals(entry.getKey())).findFirst();
-                if (optionalCell.isPresent()) {
-                    Cell cell = optionalCell.get();
-                    cell.setCount(cell.getCount() - entry.getValue());
-                    if (cell.getCount() == 0) {
-                        cellList.remove(cell);
-                    }
+        for (Map.Entry<Currency, Integer> entry : cashMap.entrySet()) {
+            Optional<Cell> optionalCell = cellList.stream().filter(c -> c.getCurrency().equals(entry.getKey())).findFirst();
+            optionalCell.ifPresent(cell -> {
+                int count = cell.getCount() - entry.getValue();
+                if (count <= 0) {
+                    cellList.remove(cell);
+                } else {
+                    cell.setCount(count);
                 }
-            }
-            log.info("cashMap [{}], list[{}] ", cashMap, cellList);
+            });
+        }
+
+
+        log.info("cashMap [{}], list[{}] ", cashMap, cellList);
     }
 }
