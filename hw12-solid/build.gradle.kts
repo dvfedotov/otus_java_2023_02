@@ -14,4 +14,5 @@ dependencies {
     implementation ("org.apache.logging.log4j:log4j")
     compileOnly ("org.projectlombok:lombok")
     annotationProcessor ("org.projectlombok:lombok")
+    implementation("commons-collections:commons-collections:3.2.2")
 }
