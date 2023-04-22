@@ -43,20 +43,20 @@ public class Atm {
                 .reduce(0, Integer::sum);
     }
 
-    public Map<Currency, Integer> getMoney(int sum) {
+    public Map<Currency, Integer> getCash(int sum) {
         if (sum > getBalance()) {
             throw new AtmException("Failed to receive the amount because there is not enough money in the ATM");
         }
         if (CollectionUtils.isEmpty(cellList)) {
             throw new AtmException("Failed to receive the amount because there is no money in the ATM");
         }
-        reversSortCellList();
+        reverseSortCellList();
         Map<Currency, Integer> cashMap = getCashMap(sum);
         updateCellList(cashMap);
         return cashMap;
     }
 
-    private void reversSortCellList() {
+    private void reverseSortCellList() {
         cellList.sort(Comparator.comparingInt(c -> c.getCurrency().getValue()));
         Collections.reverse(cellList);
     }
