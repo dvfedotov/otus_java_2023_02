@@ -58,20 +58,20 @@ public class Atm {
         Collections.reverse(cellList);
         Map<Currency, Integer> cashMap = new EnumMap<>(Currency.class);
         final int[] tempSum = {sum};
-        cellList.forEach(c -> {
-                    int currency = c.getCurrency().getValue();
-                    int x = tempSum[0] / currency;
-                    if (x > 0) {
-                        if (c.getCount() >= x) {
-                            cashMap.put(c.getCurrency(), x);
-                            tempSum[0] -= currency * x;
-                        } else {
-                            cashMap.put(c.getCurrency(), c.getCount());
-                            tempSum[0] -= c.getCount() * currency;
-                        }
-                    }
+        for (Cell cell : cellList) {
+            int currency = cell.getCurrency().getValue();
+            int x = tempSum[0] / currency;
+            if (x > 0) {
+                if (cell.getCount() >= x) {
+                    cashMap.put(cell.getCurrency(), x);
+                    tempSum[0] -= currency * x;
+                } else {
+                    cashMap.put(cell.getCurrency(), cell.getCount());
+                    tempSum[0] -= cell.getCount() * currency;
                 }
-        );
+            }
+        }
+
         if (tempSum[0] > 0) {
             log.info("Could not get sum [{}] choose another sum", sum);
         } else {
