@@ -26,7 +26,7 @@ public class Atm {
         if (CollectionUtils.isEmpty(cellList)) {
             cellList = new ArrayList<>();
         }
-        Optional<Cell> optionalCell = cellList.stream().filter(c -> c.getCurrency().equals(currency)).findFirst();
+        Optional<Cell> optionalCell = findCell(currency);
         if (optionalCell.isPresent()) {
             Cell cell = optionalCell.get();
             cell.setCount(cell.getCount() + count);
@@ -77,7 +77,7 @@ public class Atm {
             return;
         }
         for (Map.Entry<Currency, Integer> entry : cashMap.entrySet()) {
-            Optional<Cell> optionalCell = cellList.stream().filter(c -> c.getCurrency().equals(entry.getKey())).findFirst();
+            Optional<Cell> optionalCell = findCell(entry.getKey());
             optionalCell.ifPresent(cell -> {
                 int count = cell.getCount() - entry.getValue();
                 if (count <= 0) {
@@ -90,5 +90,9 @@ public class Atm {
 
 
         log.info("cashMap [{}], list[{}] ", cashMap, cellList);
+    }
+
+    private Optional<Cell> findCell(Currency currency) {
+        return cellList.stream().filter(c -> c.getCurrency().equals(currency)).findFirst();
     }
 }
