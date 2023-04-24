@@ -19,8 +19,8 @@ import java.util.Optional;
 @ToString
 public class Atm {
 
-    public static final String ERROR_MESSAGE_NOT_ENOUGH_CASH = "Failed to receive the amount because there is not enough cash in the ATM";
     public static final String ERROR_MESSAGE_NO_CASH = "Failed to receive the amount because there is no cash in the ATM";
+    public static final String ERROR_MESSAGE_NOT_ENOUGH_CASH = "Failed to receive the amount because there is not enough cash in the ATM";
     public static final String ERROR_MESSAGE_NO_BANKNOTES = "Failed to receive the amount because there are no necessary banknotes in the ATM";
     private List<Cell> cellList;
 
@@ -47,11 +47,11 @@ public class Atm {
     }
 
     public Map<Currency, Integer> getCash(int sum) {
-        if (sum > getBalance()) {
-            throw new AtmException(ERROR_MESSAGE_NOT_ENOUGH_CASH);
-        }
         if (CollectionUtils.isEmpty(cellList)) {
             throw new AtmException(ERROR_MESSAGE_NO_CASH);
+        }
+        if (sum > getBalance()) {
+            throw new AtmException(ERROR_MESSAGE_NOT_ENOUGH_CASH);
         }
         reverseSortCellList();
         Map<Currency, Integer> cashMap = getCashMap(sum);
