@@ -6,10 +6,9 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@AllArgsConstructor
 public class Cell {
 
-    private Currency currency;
+    private final Currency currency;
     private int count;
 
     public Cell(Currency currency) {
