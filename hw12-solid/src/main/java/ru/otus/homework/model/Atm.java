@@ -1,9 +1,9 @@
 package ru.otus.homework.model;
 
-import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NavigableSet;
@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 @Slf4j
-@Getter
 @ToString
 public class Atm {
 
@@ -23,4 +22,8 @@ public class Atm {
         cells = treeSet.descendingSet();
     }
 
+
+    public Set<Cell> getCells() {
+        return Collections.unmodifiableSet(cells);
+    }
 }

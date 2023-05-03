@@ -86,10 +86,10 @@ class AtmServiceImplTest {
 
     @Test
     void addCurrency_whenNoCell_throwException() {
-        Atm atm = fillAtm();
-        Set<Cell> allCells = atm.getCells();
-        Optional<Cell> optionalCell = atm.getCells().stream().filter(c -> c.getCurrency().equals(Currency.ONE_HUNDRED)).findFirst();
-        optionalCell.ifPresent(allCells::remove);
+        List<Cell> cellList = new ArrayList<>();
+        cellList.add(new Cell(Currency.FIVE_HUNDRED));
+        cellList.add(new Cell(Currency.ONE_THOUSAND));
+        Atm atm = new Atm(cellList);
 
         AtmException exception = assertThrows(AtmException.class, () -> service.addCurrency(atm, Currency.ONE_HUNDRED, 100));
 
