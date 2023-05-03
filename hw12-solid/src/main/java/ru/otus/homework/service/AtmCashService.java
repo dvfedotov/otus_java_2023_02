@@ -3,8 +3,10 @@ package ru.otus.homework.service;
 import ru.otus.homework.model.Atm;
 import ru.otus.homework.model.Currency;
 
-public interface AtmService {
+import java.util.Map;
 
-    void addCurrency(Atm atm, Currency currency, int count);
+public interface AtmCashService {
+
+    Map<Currency, Integer> getCash(Atm atm, int sum);
 
 }

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NavigableSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -34,5 +35,9 @@ public class Atm {
         return cells.stream()
                 .mapToInt(c -> c.getCurrency().getValue() * c.getCount())
                 .reduce(0, Integer::sum);
+    }
+
+    public Optional<Cell> findCell(Currency currency) {
+        return getCells().stream().filter(c -> c.getCurrency().equals(currency)).findFirst();
     }
 }
