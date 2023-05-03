@@ -2,10 +2,13 @@ package ru.otus.homework;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.otus.homework.model.Atm;
+import ru.otus.homework.model.Cell;
 import ru.otus.homework.model.Currency;
 import ru.otus.homework.service.AtmService;
 import ru.otus.homework.service.impl.AtmServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -15,7 +18,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Atm atm = new Atm();
+        List<Cell> cellList = new ArrayList<>();
+        cellList.add(new Cell(Currency.ONE_HUNDRED));
+        cellList.add(new Cell(Currency.FIVE_HUNDRED));
+        cellList.add(new Cell(Currency.ONE_THOUSAND));
+        cellList.add(new Cell(Currency.FIVE_THOUSAND));
+        Atm atm = new Atm(cellList);
         AtmService atmService = new AtmServiceImpl();
         atmService.addCurrency(atm, Currency.ONE_HUNDRED, 10);
         atmService.addCurrency(atm, Currency.FIVE_HUNDRED, 1);

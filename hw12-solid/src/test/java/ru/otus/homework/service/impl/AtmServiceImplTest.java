@@ -8,6 +8,8 @@ import ru.otus.homework.model.Cell;
 import ru.otus.homework.model.Currency;
 import ru.otus.homework.service.AtmService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -56,7 +58,7 @@ class AtmServiceImplTest {
 
     @Test
     void getCash_whenNoCash_throwException() {
-        Atm atm = new Atm();
+        Atm atm = createAtm();
 
         AtmException exception = assertThrows(AtmException.class, () -> service.getCash(atm, 66000));
 
@@ -96,11 +98,20 @@ class AtmServiceImplTest {
     }
 
     private Atm fillAtm() {
-        Atm atm = new Atm();
+        Atm atm = createAtm();
         service.addCurrency(atm, Currency.ONE_HUNDRED, 10);
         service.addCurrency(atm, Currency.FIVE_HUNDRED, 10);
         service.addCurrency(atm, Currency.ONE_THOUSAND, 10);
         service.addCurrency(atm, Currency.FIVE_THOUSAND, 10);
         return atm;
+    }
+
+    private Atm createAtm() {
+        List<Cell> cellList = new ArrayList<>();
+        cellList.add(new Cell(Currency.ONE_HUNDRED));
+        cellList.add(new Cell(Currency.FIVE_HUNDRED));
+        cellList.add(new Cell(Currency.ONE_THOUSAND));
+        cellList.add(new Cell(Currency.FIVE_THOUSAND));
+        return new Atm(cellList);
     }
 }
