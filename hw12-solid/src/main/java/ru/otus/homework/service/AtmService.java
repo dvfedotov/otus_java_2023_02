@@ -7,8 +7,6 @@ import java.util.Map;
 
 public interface AtmService {
 
-    int getBalance(Atm atm);
-
     void addCurrency(Atm atm, Currency currency, int count);
 
     Map<Currency, Integer> getCash(Atm atm, int sum);

@@ -2,7 +2,6 @@ package ru.otus.homework.service.impl;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import ru.otus.homework.exception.AtmException;
 import ru.otus.homework.model.Atm;
 import ru.otus.homework.model.Cell;
@@ -21,16 +20,6 @@ public class AtmServiceImpl implements AtmService {
     public static final String ERROR_MESSAGE_NO_BANKNOTES = "Failed to receive the amount because there are no necessary banknotes in the ATM";
     public static final String ERROR_MESSAGE_NO_CELL = "Unable to add currency because required cell is missing";
 
-    @Override
-    public int getBalance(@NonNull Atm atm) {
-        if (CollectionUtils.isEmpty(atm.getCells())) {
-            return 0;
-        }
-        return atm.getCells().stream()
-                .mapToInt(c -> c.getCurrency().getValue() * c.getCount())
-                .reduce(0, Integer::sum);
-    }
-
 
     @Override
     public void addCurrency(@NonNull Atm atm, Currency currency, int count) {
@@ -44,7 +33,7 @@ public class AtmServiceImpl implements AtmService {
 
     @Override
     public Map<Currency, Integer> getCash(@NonNull Atm atm, int sum) {
-        int balance = getBalance(atm);
+        int balance = atm.getBalance();
         if (balance <= 0) {
             throw new AtmException(ERROR_MESSAGE_NO_CASH);
         }

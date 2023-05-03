@@ -2,6 +2,7 @@ package ru.otus.homework.model;
 
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,8 +23,16 @@ public class Atm {
         cells = treeSet.descendingSet();
     }
 
-
     public Set<Cell> getCells() {
         return Collections.unmodifiableSet(cells);
+    }
+
+    public int getBalance() {
+        if (CollectionUtils.isEmpty(cells)) {
+            return 0;
+        }
+        return cells.stream()
+                .mapToInt(c -> c.getCurrency().getValue() * c.getCount())
+                .reduce(0, Integer::sum);
     }
 }

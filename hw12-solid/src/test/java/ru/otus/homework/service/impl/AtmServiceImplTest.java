@@ -11,8 +11,6 @@ import ru.otus.homework.service.AtmService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,15 +29,6 @@ class AtmServiceImplTest {
     static void initAll() {
         service = new AtmServiceImpl();
 
-    }
-
-    @Test
-    void getBalance_success() {
-        Atm atm = fillAtm();
-
-        int actual = service.getBalance(atm);
-
-        assertEquals(66000, actual);
     }
 
     @Test
