@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.NavigableSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -16,12 +14,10 @@ import java.util.TreeSet;
 @ToString
 public class Atm {
 
-    private final Set<Cell> cells;
+    private final Set<Cell> cells = new TreeSet<>(Collections.reverseOrder());
 
     public Atm(List<Cell> cellList) {
-        NavigableSet<Cell> treeSet = new TreeSet<>(Comparator.comparingInt(c -> c.getCurrency().getValue()));
-        treeSet.addAll(cellList);
-        cells = treeSet.descendingSet();
+        cells.addAll(cellList);
     }
 
     public Set<Cell> getCells() {

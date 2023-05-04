@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class Cell {
+public class Cell implements Comparable<Cell> {
 
     private final Currency currency;
     private int count;
@@ -26,4 +26,21 @@ public class Cell {
         }
     }
 
+    @Override
+    public int compareTo(Cell c) {
+        return Integer.compare(this.getCurrency().getValue(), c.getCurrency().getValue());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cell cell)) return false;
+
+        return getCurrency() == cell.getCurrency();
+    }
+
+    @Override
+    public int hashCode() {
+        return getCurrency().hashCode();
+    }
 }

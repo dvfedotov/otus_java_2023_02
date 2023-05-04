@@ -20,16 +20,16 @@ public class Main {
     public static final String ATM_2_MESSAGE = "ATM_2 dispensed [{}] balance [{}]";
 
     public static void main(String[] args) {
-
-        Atm atm = fillAtm_1();
         AtmCashService cashService = new AtmCashServiceImpl();
         AtmService atmService = new AtmServiceImpl();
+
+        Atm atm = fillAtm1();
         atmService.addCurrency(atm, Currency.ONE_HUNDRED, 10);
         atmService.addCurrency(atm, Currency.FIVE_HUNDRED, 1);
         Map<Currency, Integer> cashMap1 = cashService.getCash(atm, 1000);
         log.info(ATM_1_MESSAGE, cashMap1, atm.getBalance());
 
-        Atm atm2 = fillAtm_2();
+        Atm atm2 = fillAtm2();
         atmService.addCurrency(atm2, Currency.ONE_HUNDRED, 10);
         atmService.addCurrency(atm2, Currency.FIVE_HUNDRED, 10);
         Map<Currency, Integer> cashMap5 = cashService.getCash(atm2, 2200);
@@ -50,23 +50,22 @@ public class Main {
         log.info(ATM_1_MESSAGE, cashMap4, atm.getBalance());
 
 
-
     }
 
-    private static Atm fillAtm_2() {
-        List<Cell> cellList2 = new ArrayList<>();
-        cellList2.add(new Cell(Currency.ONE_HUNDRED));
-        cellList2.add(new Cell(Currency.FIVE_HUNDRED));
-        cellList2.add(new Cell(Currency.ONE_THOUSAND));
-        return new Atm(cellList2);
-    }
-
-    private static Atm fillAtm_1() {
+    private static Atm fillAtm1() {
         List<Cell> cellList = new ArrayList<>();
         cellList.add(new Cell(Currency.ONE_HUNDRED));
         cellList.add(new Cell(Currency.FIVE_HUNDRED));
         cellList.add(new Cell(Currency.ONE_THOUSAND));
         cellList.add(new Cell(Currency.FIVE_THOUSAND));
         return new Atm(cellList);
+    }
+
+    private static Atm fillAtm2() {
+        List<Cell> cellList2 = new ArrayList<>();
+        cellList2.add(new Cell(Currency.ONE_HUNDRED));
+        cellList2.add(new Cell(Currency.FIVE_HUNDRED));
+        cellList2.add(new Cell(Currency.ONE_THOUSAND));
+        return new Atm(cellList2);
     }
 }
