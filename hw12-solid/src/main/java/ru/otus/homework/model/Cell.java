@@ -1,6 +1,5 @@
 package ru.otus.homework.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -21,9 +20,9 @@ public class Cell {
         }
     }
 
-    public void getCash(int count){
-        if(count >= this.count){
-            this.count-=count;
+    public void getCash(int count) {
+        if (count >= this.count) {
+            this.count -= count;
         }
     }
 

@@ -51,8 +51,6 @@ public class Main {
 
 
 
-
-
     }
 
     private static Atm fillAtm_2() {
