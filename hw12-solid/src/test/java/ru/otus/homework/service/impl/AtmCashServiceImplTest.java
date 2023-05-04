@@ -7,7 +7,7 @@ import ru.otus.homework.model.Atm;
 import ru.otus.homework.model.Cell;
 import ru.otus.homework.model.Currency;
 import ru.otus.homework.service.AtmCashService;
-import ru.otus.homework.service.AtmService;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +23,26 @@ class AtmCashServiceImplTest {
     public static final String ERROR_MESSAGE_NO_CASH = "Failed to receive the amount because there is no cash in the ATM";
     public static final String ERROR_MESSAGE_NOT_ENOUGH_CASH = "Failed to receive the amount because there is not enough cash in the ATM";
     public static final String ERROR_MESSAGE_NO_BANKNOTES = "Failed to receive the amount because there are no necessary banknotes in the ATM";
-
+    public static final String ERROR_MESSAGE_NO_CELL = "Unable to add currency because required cell is missing";
 
     private static AtmCashService service;
 
     @BeforeAll
     static void initAll() {
         service = new AtmCashServiceImpl();
+
+    }
+
+    @Test
+    void addCurrency_whenNoCell_throwException() {
+        List<Cell> cellList = new ArrayList<>();
+        cellList.add(new Cell(Currency.FIVE_HUNDRED));
+        cellList.add(new Cell(Currency.ONE_THOUSAND));
+        Atm atm = new Atm(cellList);
+
+        AtmException exception = assertThrows(AtmException.class, () -> service.addCash(atm, Currency.ONE_HUNDRED, 100));
+
+        assertEquals(ERROR_MESSAGE_NO_CELL, exception.getMessage());
 
     }
 
@@ -77,11 +90,11 @@ class AtmCashServiceImplTest {
 
     private Atm fillAtm() {
         Atm atm = createAtm();
-        AtmService atmService = new AtmServiceImpl();
-        atmService.addCurrency(atm, Currency.ONE_HUNDRED, 10);
-        atmService.addCurrency(atm, Currency.FIVE_HUNDRED, 10);
-        atmService.addCurrency(atm, Currency.ONE_THOUSAND, 10);
-        atmService.addCurrency(atm, Currency.FIVE_THOUSAND, 10);
+        AtmCashService atmService = new AtmCashServiceImpl();
+        atmService.addCash(atm, Currency.ONE_HUNDRED, 10);
+        atmService.addCash(atm, Currency.FIVE_HUNDRED, 10);
+        atmService.addCash(atm, Currency.ONE_THOUSAND, 10);
+        atmService.addCash(atm, Currency.FIVE_THOUSAND, 10);
         return atm;
     }
 

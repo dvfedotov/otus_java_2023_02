@@ -5,9 +5,7 @@ import ru.otus.homework.model.Atm;
 import ru.otus.homework.model.Cell;
 import ru.otus.homework.model.Currency;
 import ru.otus.homework.service.AtmCashService;
-import ru.otus.homework.service.AtmService;
 import ru.otus.homework.service.impl.AtmCashServiceImpl;
-import ru.otus.homework.service.impl.AtmServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,31 +19,30 @@ public class Main {
 
     public static void main(String[] args) {
         AtmCashService cashService = new AtmCashServiceImpl();
-        AtmService atmService = new AtmServiceImpl();
 
         Atm atm = fillAtm1();
-        atmService.addCurrency(atm, Currency.ONE_HUNDRED, 10);
-        atmService.addCurrency(atm, Currency.FIVE_HUNDRED, 1);
+        cashService.addCash(atm, Currency.ONE_HUNDRED, 10);
+        cashService.addCash(atm, Currency.FIVE_HUNDRED, 1);
         Map<Currency, Integer> cashMap1 = cashService.getCash(atm, 1000);
         log.info(ATM_1_MESSAGE, cashMap1, atm.getBalance());
 
         Atm atm2 = fillAtm2();
-        atmService.addCurrency(atm2, Currency.ONE_HUNDRED, 10);
-        atmService.addCurrency(atm2, Currency.FIVE_HUNDRED, 10);
+        cashService.addCash(atm2, Currency.ONE_HUNDRED, 10);
+        cashService.addCash(atm2, Currency.FIVE_HUNDRED, 10);
         Map<Currency, Integer> cashMap5 = cashService.getCash(atm2, 2200);
         log.info(ATM_2_MESSAGE, cashMap5, atm2.getBalance());
 
-        atmService.addCurrency(atm, Currency.ONE_HUNDRED, 10);
-        atmService.addCurrency(atm, Currency.FIVE_HUNDRED, 10);
+        cashService.addCash(atm, Currency.ONE_HUNDRED, 10);
+        cashService.addCash(atm, Currency.FIVE_HUNDRED, 10);
         Map<Currency, Integer> cashMap2 = cashService.getCash(atm, 1300);
         log.info(ATM_1_MESSAGE, cashMap2, atm.getBalance());
 
-        atmService.addCurrency(atm, Currency.ONE_THOUSAND, 100);
+        cashService.addCash(atm, Currency.ONE_THOUSAND, 100);
         Map<Currency, Integer> cashMap3 = cashService.getCash(atm, 13200);
         log.info(ATM_1_MESSAGE, cashMap3, atm.getBalance());
 
-        atmService.addCurrency(atm, Currency.ONE_THOUSAND, 50);
-        atmService.addCurrency(atm, Currency.FIVE_THOUSAND, 10);
+        cashService.addCash(atm, Currency.ONE_THOUSAND, 50);
+        cashService.addCash(atm, Currency.FIVE_THOUSAND, 10);
         Map<Currency, Integer> cashMap4 = cashService.getCash(atm, 121600);
         log.info(ATM_1_MESSAGE, cashMap4, atm.getBalance());
 

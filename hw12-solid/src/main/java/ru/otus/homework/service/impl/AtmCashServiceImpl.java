@@ -20,6 +20,16 @@ public class AtmCashServiceImpl implements AtmCashService {
     public static final String ERROR_MESSAGE_NO_BANKNOTES = "Failed to receive the amount because there are no necessary banknotes in the ATM";
     public static final String ERROR_MESSAGE_NO_CELL = "Unable to add currency because required cell is missing";
 
+
+    @Override
+    public void addCash(@NonNull Atm atm, Currency currency, int count) {
+        Optional<Cell> optionalCell = atm.findCell(currency);
+        optionalCell.ifPresentOrElse(c -> c.addCash(count),
+                () -> {
+                    throw new AtmException(ERROR_MESSAGE_NO_CELL);
+                });
+    }
+
     @Override
     public Map<Currency, Integer> getCash(@NonNull Atm atm, int sum) {
         int balance = atm.getBalance();

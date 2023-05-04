@@ -2,8 +2,8 @@ package ru.otus.homework.model;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.otus.homework.service.AtmService;
-import ru.otus.homework.service.impl.AtmServiceImpl;
+import ru.otus.homework.service.AtmCashService;
+import ru.otus.homework.service.impl.AtmCashServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AtmTest {
 
-    private static AtmService service;
+    private static AtmCashService service;
 
     @BeforeAll
     static void initAll() {
-        service = new AtmServiceImpl();
+        service = new AtmCashServiceImpl();
 
     }
 
@@ -32,10 +32,10 @@ class AtmTest {
 
     private Atm fillAtm() {
         Atm atm = createAtm();
-        service.addCurrency(atm, Currency.ONE_HUNDRED, 10);
-        service.addCurrency(atm, Currency.FIVE_HUNDRED, 10);
-        service.addCurrency(atm, Currency.ONE_THOUSAND, 10);
-        service.addCurrency(atm, Currency.FIVE_THOUSAND, 10);
+        service.addCash(atm, Currency.ONE_HUNDRED, 10);
+        service.addCash(atm, Currency.FIVE_HUNDRED, 10);
+        service.addCash(atm, Currency.ONE_THOUSAND, 10);
+        service.addCash(atm, Currency.FIVE_THOUSAND, 10);
         return atm;
     }
 
