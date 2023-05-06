@@ -5,6 +5,7 @@ include("hw06-annotaions")
 include("hw08-gc:homework")
 include("hw10-aop")
 include("hw12-solid")
+include("hw15-patterns:homework")
 
 pluginManagement {
     val jgitver: String by settings
@@ -21,5 +22,4 @@ pluginManagement {
         id("com.google.cloud.tools.jib") version jib
     }
 }
-
 
