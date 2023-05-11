@@ -6,13 +6,15 @@ import ru.otus.model.Message;
 import ru.otus.processor.LoggerProcessor;
 import ru.otus.processor.ProcessorConcatFields;
 import ru.otus.processor.ProcessorUpperField10;
+import ru.otus.processor.homework.ChangerProcessor;
 
 import java.util.List;
 
 public class Demo {
     public static void main(String[] args) {
         var processors = List.of(new ProcessorConcatFields(),
-                new LoggerProcessor(new ProcessorUpperField10()));
+                new LoggerProcessor(new ProcessorUpperField10()),
+                new ChangerProcessor());
 
         var complexProcessor = new ComplexProcessor(processors, ex -> {});
         var listenerPrinter = new ListenerPrinterConsole();
@@ -24,6 +26,8 @@ public class Demo {
                 .field3("field3")
                 .field6("field6")
                 .field10("field10")
+                .field11("field11")
+                .field12("field12")
                 .build();
 
         var result = complexProcessor.handle(message);

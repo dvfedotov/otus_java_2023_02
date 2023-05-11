@@ -123,6 +123,9 @@ public class Message {
                 ", field8='" + field8 + '\'' +
                 ", field9='" + field9 + '\'' +
                 ", field10='" + field10 + '\'' +
+                ", field11='" + field11 + '\'' +
+                ", field12='" + field12 + '\'' +
+                ", field13='" + field13 + '\'' +
                 '}';
     }
 
@@ -158,6 +161,9 @@ public class Message {
             this.field8 = field8;
             this.field9 = field9;
             this.field10 = field10;
+            this.field11 = field11;
+            this.field12 = field12;
+            this.field13 = field13;
         }
 
         public Builder field1(String field1) {
