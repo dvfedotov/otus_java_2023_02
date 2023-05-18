@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ProcessorEvenSecondExceptionTest {
+class ProcessorEvenSecondTest {
 
     public static final long ID = 100L;
 
     @Test
     void process_whenOddSecond_success() {
-        var exceptionProcessor = new ProcessorEvenSecondException(() -> LocalDateTime.of(2023, 5, 18, 10, 10, 11));
+        var exceptionProcessor = new ProcessorEvenSecond(() -> LocalDateTime.of(2023, 5, 18, 10, 10, 11));
 
         assertDoesNotThrow(() -> exceptionProcessor.process(getMessage()));
     }
@@ -24,7 +24,7 @@ class ProcessorEvenSecondExceptionTest {
     @Test
     @SneakyThrows
     void process_whenEvenSecond_throwException() {
-        var exceptionProcessor = new ProcessorEvenSecondException(() -> LocalDateTime.of(2023, 5, 18, 10, 10, 22));
+        var exceptionProcessor = new ProcessorEvenSecond(() -> LocalDateTime.of(2023, 5, 18, 10, 10, 22));
 
         assertThrows(EvenSecondException.class, () -> exceptionProcessor.process(getMessage()));
     }

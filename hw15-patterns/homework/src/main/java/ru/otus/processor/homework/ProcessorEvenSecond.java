@@ -4,11 +4,11 @@ import ru.otus.exception.EvenSecondException;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 
-public class ProcessorEvenSecondException implements Processor {
+public class ProcessorEvenSecond implements Processor {
 
     private final DateTimeProvider dateTimeProvider;
 
-    public ProcessorEvenSecondException(DateTimeProvider dateTimeProvider) {
+    public ProcessorEvenSecond(DateTimeProvider dateTimeProvider) {
         this.dateTimeProvider = dateTimeProvider;
     }
 
