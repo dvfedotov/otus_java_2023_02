@@ -2,17 +2,14 @@ package ru.otus.processor.homework;
 
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
-import ru.otus.model.ObjectForMessage;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ChangerProcessorTest {
+class ProcessorChangeFieldsTest {
 
     @Test
     void process() {
-        var changerProcessor = new ChangerProcessor();
+        var changerProcessor = new ProcessorChangeFields();
 
         var id = 100L;
 

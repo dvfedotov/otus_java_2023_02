@@ -3,7 +3,7 @@ package ru.otus.processor.homework;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 
-public class ChangerProcessor implements Processor {
+public class ProcessorChangeFields implements Processor {
     @Override
     public Message process(Message message) {
         return message.toBuilder()
