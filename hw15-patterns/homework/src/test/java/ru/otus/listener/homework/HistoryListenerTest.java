@@ -8,6 +8,7 @@ import ru.otus.model.ObjectForMessage;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HistoryListenerTest {
 

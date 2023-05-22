@@ -13,7 +13,11 @@ public class HistoryListener implements Listener, HistoryReader {
 
     @Override
     public void onUpdated(Message msg) {
-        historyMessageMap.put(msg.getId(), new Message(msg));
+        try {
+            historyMessageMap.put(msg.getId(), (Message) msg.clone());
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
