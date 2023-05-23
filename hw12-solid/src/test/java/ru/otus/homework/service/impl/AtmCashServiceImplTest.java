@@ -79,6 +79,7 @@ class AtmCashServiceImplTest {
     }
 
     @Test
+
     void getCash_whenNoBanknotes_throwException() {
         Atm atm = fillAtm();
 
