@@ -34,7 +34,7 @@ public class ResourcesFileLoader implements Loader {
             return mapper.fromJson(reader, measurementListType);
         } catch (IOException e) {
             log.error("Cannot parse json", e);
-            return Collections.emptyList();
+            throw new FileProcessException(e);
         }
     }
 }

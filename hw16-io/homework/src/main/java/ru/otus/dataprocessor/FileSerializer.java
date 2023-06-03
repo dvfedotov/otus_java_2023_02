@@ -24,6 +24,7 @@ public class FileSerializer implements Serializer {
             mapper.toJson(new TreeMap<>(data), fileWriter);
         } catch (IOException e) {
             log.error("Cannot save json", e);
+            throw new FileProcessException(e);
         }
     }
 }
