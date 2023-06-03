@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Slf4j
 public class FileSerializer implements Serializer {
