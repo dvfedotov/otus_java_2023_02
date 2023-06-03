@@ -4,6 +4,7 @@ import ru.otus.model.Measurement;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class ProcessorAggregator implements Processor {
@@ -13,6 +14,7 @@ public class ProcessorAggregator implements Processor {
         return data.stream().collect(Collectors.toMap(
                 Measurement::getName,
                 Measurement::getValue,
-                Double::sum));
+                Double::sum,
+                TreeMap::new));
     }
 }

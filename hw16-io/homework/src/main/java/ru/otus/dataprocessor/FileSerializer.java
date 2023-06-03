@@ -21,7 +21,7 @@ public class FileSerializer implements Serializer {
     @Override
     public void serialize(Map<String, Double> data) {
         try (FileWriter fileWriter = new FileWriter(fileName)) {
-            mapper.toJson(new TreeMap<>(data), fileWriter);
+            mapper.toJson(data, fileWriter);
         } catch (IOException e) {
             log.error("Cannot save json", e);
             throw new FileProcessException(e);
