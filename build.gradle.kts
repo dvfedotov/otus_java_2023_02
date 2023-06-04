@@ -33,8 +33,11 @@ allprojects {
 
     val testcontainersBom: String by project
     val protobufBom: String by project
-
-    val guava: String by project;
+    val guava: String by project
+    val jmh: String by project
+    val asm: String by project
+    val glassfishJson: String by project
+    val ehcache: String by project
     val log4j: String by project;
 
 
@@ -47,6 +50,11 @@ allprojects {
                 mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("com.google.guava:guava:$guava")
+            dependency("org.openjdk.jmh:jmh-core:$jmh")
+            dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
+            dependency("org.ow2.asm:asm-commons:$asm")
+            dependency("org.glassfish:jakarta.json:$glassfishJson")
+            dependency("org.ehcache:ehcache:$ehcache")
             dependency("org.apache.logging.log4j:log4j:$log4j")
         }
     }
@@ -55,6 +63,14 @@ allprojects {
         resolutionStrategy {
             failOnVersionConflict()
 
+            force("javax.servlet:servlet-api:2.4")
+            force("commons-logging:commons-logging:1.1.1")
+            force("commons-lang:commons-lang:2.5")
+            force("org.codehaus.jackson:jackson-core-asl:1.8.8")
+            force("org.codehaus.jackson:jackson-mapper-asl:1.8.3")
+            force("org.codehaus.jettison:jettison:1.1")
+            force("net.java.dev.jna:jna:5.8.0")
+            force("com.google.errorprone:error_prone_annotations:2.7.1")
         }
     }
 

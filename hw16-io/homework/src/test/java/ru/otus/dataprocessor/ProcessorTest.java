@@ -1,6 +1,5 @@
 package ru.otus.dataprocessor;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -19,15 +18,14 @@ class ProcessorTest {
     //сам тест менять нельзя
 
     @Test
-    @Disabled // Эту аннотацию надо убрать
-    @DisplayName("Из файла читается json, обрабатывается, результат сериализуется в строку")
+    @DisplayName("json is read from the file, processed, the result is serialized into a string")
     void processingTest(@TempDir Path tempDir) throws IOException {
         System.out.println(tempDir);
 
         //given
         var inputDataFileName = "inputData.json";
         var outputDataFileName = "outputData.json";
-        var fullOutputFilePath = String.format("%s%s%s",tempDir, File.separator, outputDataFileName);
+        var fullOutputFilePath = String.format("%s%s%s", tempDir, File.separator, outputDataFileName);
 
         var loader = new ResourcesFileLoader(inputDataFileName);
         var processor = new ProcessorAggregator();
