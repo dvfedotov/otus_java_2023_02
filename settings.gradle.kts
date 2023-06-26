@@ -7,6 +7,8 @@ include("hw10-aop")
 include("hw12-solid")
 include("hw15-patterns:homework")
 include("hw16-io:homework")
+include("hw19-jdbc:demo")
+include("hw19-jdbc:homework")
 
 pluginManagement {
     val jgitver: String by settings
